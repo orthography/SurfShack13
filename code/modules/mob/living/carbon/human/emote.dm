@@ -12,6 +12,37 @@
 	key = "eyebrow"
 	message = "raises an eyebrow."
 
+/datum/emote/living/laugh/run_emote(mob/user, params)
+	. = ..()
+	if(!ishuman(user))
+		return
+	var/mob/living/carbon/human/H = user
+	var/image/img = image('icons/hud/clash_royal_laugh.dmi', loc = H, layer=HUD_PLANE)
+	img.plane = HUD_PLANE
+	img.pixel_x -= 32
+	img.pixel_y -= 32
+	var/orig_matrix = img.transform * 0.5
+	img.transform *= 0
+	for (var/mob/M in viewers(world.view, user))
+		if (istype(M.client))
+			M.client.images += img
+	animate(img, transform = orig_matrix, time = 1.5)
+	if(H.mind && !HAS_TRAIT(H, TRAIT_MIMING))
+		playsound(H, 'sound/mobs/humanoids/human/laugh/clash_royale_laugh.ogg', 50, 1)
+
+	if(prob(1))//spam prevention
+		H.visible_message(span_danger("[src] laughs so hard \he explodes!"),\
+						span_warning("you laugh so hard you explode!"))
+		H.gib(DROP_ALL_REMAINS)
+
+	addtimer(CALLBACK(src, PROC_REF(fade_out), H, img), 20)
+
+/datum/emote/living/laugh/proc/fade_out(mob/living/carbon/human/H, image/img)
+	if(QDELETED(H) || QDELETED(img))
+		return
+	animate(img, transform = matrix() * 0, time = 1.5)
+	QDEL_IN(img, 2)
+
 /datum/emote/living/carbon/human/glasses
 	key = "glasses"
 	key_third_person = "glasses"
