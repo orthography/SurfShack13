@@ -18,7 +18,7 @@
 	message = "hehehehaws."
 	message_mime = "hehehehaws silently!"
 	emote_type = EMOTE_VISIBLE | EMOTE_AUDIBLE
-	specific_emote_audio_cooldown = 2 MINUTES // we HATE fun >:(
+	specific_emote_audio_cooldown = 30 SECONDS
 	vary = TRUE
 
 /datum/emote/living/carbon/human/hehehehaw/run_emote(mob/living/carbon/human/H, params)
@@ -31,7 +31,7 @@
 			M.client.images += img
 	animate(img, transform = orig_matrix, time = 1.5)
 	if(H.mind && !HAS_TRAIT(H, TRAIT_MIMING))
-		playsound(H, 'sound/mobs/humanoids/human/laugh/clash_royale_laugh.ogg', 50, 1)
+		playsound(H, 'sound/mobs/humanoids/human/laugh/hehehehehaw.ogg', 50, 1)
 
 	addtimer(CALLBACK(src, PROC_REF(fade_out), H, img), 20)
 
