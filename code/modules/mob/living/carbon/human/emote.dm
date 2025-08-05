@@ -18,7 +18,7 @@
 	message = "hehehehaws."
 	message_mime = "hehehehaws silently!"
 	emote_type = EMOTE_VISIBLE | EMOTE_AUDIBLE
-	specific_emote_audio_cooldown = 30 SECONDS
+	specific_emote_audio_cooldown = 1 MINUTES
 	vary = TRUE
 
 /datum/emote/living/carbon/human/hehehehaw/run_emote(mob/living/carbon/human/H, params)
@@ -27,8 +27,9 @@
 	var/orig_matrix = img.transform * 0.5
 	img.transform *= 0
 	for (var/mob/M in viewers(world.view, H))
-		if (istype(M.client))
-			M.client.images += img
+		if (!M.client)
+			continue
+		M.client.images += img
 	animate(img, transform = orig_matrix, time = 1.5)
 	if(H.mind && !HAS_TRAIT(H, TRAIT_MIMING))
 		playsound(H, 'sound/mobs/humanoids/human/laugh/hehehehehaw.ogg', 50, 1)
