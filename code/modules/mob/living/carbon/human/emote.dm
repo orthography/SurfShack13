@@ -36,7 +36,7 @@
 		M.client.images += img
 	animate(img, transform = orig_matrix, time = 1.5)
 	if(H.mind && !HAS_TRAIT(H, TRAIT_MIMING))
-		playsound(H, 'sound/mobs/humanoids/human/laugh/hehehehehaw.ogg', 50, 1)
+		playsound(H, 'sound/mobs/humanoids/human/laugh/hehehehehaw.ogg', 25, 1)
 
 	addtimer(CALLBACK(src, PROC_REF(fade_out), H, img), 20)
 
