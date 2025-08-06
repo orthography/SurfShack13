@@ -22,7 +22,11 @@
 	vary = TRUE
 
 /datum/emote/living/carbon/human/hehehehaw/run_emote(mob/living/carbon/human/H, params)
+	if(TIMER_COOLDOWN_RUNNING(H, type))
+		return
 	. = ..()
+	TIMER_COOLDOWN_START(H, type, specific_emote_audio_cooldown)
+
 	var/image/img = image('icons/hud/clash_royal_laugh.dmi', loc = H, layer=HUD_PLANE, pixel_x = -32, pixel_y = -32)
 	var/orig_matrix = img.transform * 0.5
 	img.transform *= 0
